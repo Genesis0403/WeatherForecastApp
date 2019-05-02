@@ -4,4 +4,9 @@
     <string name="alphabetically_descending">Alphabetically descending</string>
     <string name="temperature_ascending">Temperature ascending</string>
     <string name="temperature_descending">Temperature descending</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="remove_title">Remove from favorites?</string>
+    <string name="add_title">Add to favorites?</string>
+    <string name="remove_action">Remove</string>
+    <string name="add_action">Add</string>
 </resources>

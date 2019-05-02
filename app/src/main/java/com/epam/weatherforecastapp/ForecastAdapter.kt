@@ -15,7 +15,8 @@ import com.epam.weatherforecastapp.model.Header
 import com.epam.weatherforecastapp.model.Weather.*
 
 class ForecastAdapter(
-    private val items: List<ForecastElement>
+    private val items: List<ForecastElement>,
+    private val fragment: ForecastFragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -57,6 +58,22 @@ class ForecastAdapter(
                 .load(el.image)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.cityImage)
+
+            holder.itemView.setOnClickListener {
+            }
+
+            holder.itemView.setOnLongClickListener {
+                val adapterPosition = holder.adapterPosition
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    ForecastDialog.newInstance(items[adapterPosition] as CityForecast).apply {
+                        setTargetFragment(fragment, DIALOG_REQUEST_CODE)
+                    }.show(fragment.activity?.supportFragmentManager, null)
+                    true
+                } else {
+                    false
+                }
+            }
+
         } else {
             holder as HeaderViewHolder
             el as Header
@@ -85,12 +102,13 @@ class ForecastAdapter(
         val units = item.findViewById<TextView>(R.id.temperatureUnits)
     }
 
-    inner class HeaderViewHolder(section: FrameLayout) : RecyclerView.ViewHolder(section) {
-        val title = section.findViewById<TextView>(R.id.title)
+    inner class HeaderViewHolder(header: FrameLayout) : RecyclerView.ViewHolder(header) {
+        val title = header.findViewById<TextView>(R.id.title)
     }
 
     companion object {
         const val ITEM = 0
         const val HEADER = 1
+        const val DIALOG_REQUEST_CODE = 666
     }
 }
