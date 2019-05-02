@@ -1,6 +1,7 @@
 package com.epam.weatherforecastapp.model
 
-abstract class ForecastElement(
-    val isSection: Boolean = false,
-    val title: String? = null
-)
+import android.os.Parcelable
+
+interface ForecastElement : Parcelable {
+    val isHeader: Boolean
+}

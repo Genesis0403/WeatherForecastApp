@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WeatherForecastApp</string>
+    <string name="alphabetically_ascending">Alphabetically ascending</string>
+    <string name="alphabetically_descending">Alphabetically descending</string>
+    <string name="temperature_ascending">Temperature ascending</string>
+    <string name="temperature_descending">Temperature descending</string>
 </resources>

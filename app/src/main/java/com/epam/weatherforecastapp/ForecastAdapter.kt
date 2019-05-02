@@ -1,6 +1,5 @@
 package com.epam.weatherforecastapp
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -12,48 +11,55 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.epam.weatherforecastapp.model.CityForecast
 import com.epam.weatherforecastapp.model.ForecastElement
+import com.epam.weatherforecastapp.model.Header
 import com.epam.weatherforecastapp.model.Weather.*
 
 class ForecastAdapter(
-    private val items: List<ForecastElement>,
-    private val context: Context
+    private val items: List<ForecastElement>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-        when (viewType) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
             ITEM -> {
                 val item = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_fragment, parent, false) as ConstraintLayout
                 ItemViewHolder(item)
             }
-            SECTION -> {
+            HEADER -> {
                 val section = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.section_fragment, parent, false) as FrameLayout
-                SectionViewHolder(section)
+                    .inflate(R.layout.header_fragment, parent, false) as FrameLayout
+                HeaderViewHolder(section)
             }
             else -> throw IllegalArgumentException("No such view type!")
         }
+    }
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        super.getItemViewType(position)
+        return if (items[position].isHeader) HEADER else ITEM
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val el = items[position]
         if (holder is ItemViewHolder) {
             el as CityForecast
-
             holder.cityName.text = el.cityName
             holder.usefuleInfo.text = el.info
             holder.temperature.text = el.temperature.toString()
             holder.units.text = el.units
             loadWeatherIcon(holder, el)
 
-            Glide.with(context).load(el.image)
+            Glide.with(holder.cityImage.context)
+                .load(el.image)
                 .apply(RequestOptions.circleCropTransform())
-                .into((holder.cityImage))
+                .into(holder.cityImage)
         } else {
-            holder as SectionViewHolder
+            holder as HeaderViewHolder
+            el as Header
             holder.title.text = el.title
         }
     }
@@ -65,7 +71,7 @@ class ForecastAdapter(
             STORM -> R.drawable.ic_flash_on_black_24dp
             CLOUDY -> R.drawable.ic_cloud_black_24dp
         }
-        Glide.with(context)
+        Glide.with(holder.cityImage.context)
             .load(icon)
             .into(holder.weatherImage)
     }
@@ -79,12 +85,12 @@ class ForecastAdapter(
         val units = item.findViewById<TextView>(R.id.temperatureUnits)
     }
 
-    inner class SectionViewHolder(section: FrameLayout) : RecyclerView.ViewHolder(section) {
+    inner class HeaderViewHolder(section: FrameLayout) : RecyclerView.ViewHolder(section) {
         val title = section.findViewById<TextView>(R.id.title)
     }
 
     companion object {
         const val ITEM = 0
-        const val SECTION = 1
+        const val HEADER = 1
     }
 }
