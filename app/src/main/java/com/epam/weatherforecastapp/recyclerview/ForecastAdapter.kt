@@ -1,4 +1,4 @@
-package com.epam.weatherforecastapp
+package com.epam.weatherforecastapp.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,10 +9,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.epam.weatherforecastapp.R
 import com.epam.weatherforecastapp.model.CityForecast
 import com.epam.weatherforecastapp.model.ForecastElement
 import com.epam.weatherforecastapp.model.Header
-import com.epam.weatherforecastapp.model.Weather.*
+import com.epam.weatherforecastapp.viewpager.ForecastPagerFragment
 
 class ForecastAdapter(
     private val items: List<ForecastElement>,
@@ -45,33 +46,28 @@ class ForecastAdapter(
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val el = items[position]
+        val el = items[holder.adapterPosition]
         if (holder is ItemViewHolder) {
             el as CityForecast
             holder.cityName.text = el.cityName
-            holder.usefuleInfo.text = el.info
+            holder.usefulInfo.text = el.info
             holder.temperature.text = el.temperature.toString()
             holder.units.text = el.units
             loadWeatherIcon(holder, el)
 
             Glide.with(holder.cityImage.context)
                 .load(el.image)
+                .placeholder(R.drawable.ic_weather_icon_placeholder)
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.cityImage)
 
             holder.itemView.setOnClickListener {
+                //Log.d(TAG, el.toString())
+                onClickListenerInit(el)
             }
 
             holder.itemView.setOnLongClickListener {
-                val adapterPosition = holder.adapterPosition
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    ForecastDialog.newInstance(items[adapterPosition] as CityForecast).apply {
-                        setTargetFragment(fragment, DIALOG_REQUEST_CODE)
-                    }.show(fragment.activity?.supportFragmentManager, null)
-                    true
-                } else {
-                    false
-                }
+                onLongClickListenerInit(holder)
             }
 
         } else {
@@ -81,32 +77,52 @@ class ForecastAdapter(
         }
     }
 
-    private fun loadWeatherIcon(holder: ItemViewHolder, el: CityForecast) {
-        val icon = when (el.weather) {
-            SUNNY -> R.drawable.ic_wb_sunny_black_24dp
-            COLD -> R.drawable.ic_ac_unit_black_24dp
-            STORM -> R.drawable.ic_flash_on_black_24dp
-            CLOUDY -> R.drawable.ic_cloud_black_24dp
+    private fun onClickListenerInit(item: CityForecast) {
+        fragment.activity?.supportFragmentManager?.beginTransaction()?.apply {
+            replace(R.id.mainActivity, ForecastPagerFragment.newInstance(item))
+            addToBackStack(null)
+            commit()
         }
+    }
+
+    private fun onLongClickListenerInit(holder: ItemViewHolder): Boolean {
+        val adapterPosition = holder.adapterPosition
+        return if (adapterPosition != RecyclerView.NO_POSITION) {
+            ForecastDialog.newInstance(items[adapterPosition] as CityForecast)
+                .apply {
+                    setTargetFragment(
+                        fragment,
+                        DIALOG_REQUEST_CODE
+                    )
+                }.show(fragment.activity?.supportFragmentManager ?: return false, null)
+            true
+        } else {
+            false
+        }
+    }
+
+    private fun loadWeatherIcon(holder: ItemViewHolder, el: CityForecast) {
         Glide.with(holder.cityImage.context)
-            .load(icon)
+            .load(el.weather.icon)
+            .placeholder(R.drawable.ic_weather_icon_placeholder)
             .into(holder.weatherImage)
     }
 
     inner class ItemViewHolder(item: ConstraintLayout) : RecyclerView.ViewHolder(item) {
-        val cityName = item.findViewById<TextView>(R.id.cityName)
-        val usefuleInfo = item.findViewById<TextView>(R.id.usefulInformation)
-        val cityImage = item.findViewById<ImageView>(R.id.cityImage)
-        val weatherImage = item.findViewById<ImageView>(R.id.weatherImage)
-        val temperature = item.findViewById<TextView>(R.id.temperatureNumber)
-        val units = item.findViewById<TextView>(R.id.temperatureUnits)
+        val cityName: TextView = item.findViewById(R.id.cityName)
+        val usefulInfo: TextView = item.findViewById(R.id.usefulInformation)
+        val cityImage: ImageView = item.findViewById(R.id.cityImage)
+        val weatherImage: ImageView = item.findViewById(R.id.firstPageWeatherImage)
+        val temperature: TextView = item.findViewById(R.id.firstPageTempNumber)
+        val units: TextView = item.findViewById(R.id.firstPageTempUnits)
     }
 
     inner class HeaderViewHolder(header: FrameLayout) : RecyclerView.ViewHolder(header) {
-        val title = header.findViewById<TextView>(R.id.title)
+        val title: TextView = header.findViewById(R.id.title)
     }
 
     companion object {
+        private const val TAG = "FORECAST ADAPTER"
         const val ITEM = 0
         const val HEADER = 1
         const val DIALOG_REQUEST_CODE = 666

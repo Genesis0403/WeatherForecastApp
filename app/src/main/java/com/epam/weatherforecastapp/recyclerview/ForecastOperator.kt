@@ -1,4 +1,4 @@
-package com.epam.weatherforecastapp
+package com.epam.weatherforecastapp.recyclerview
 
 import android.util.Log
 import com.epam.weatherforecastapp.model.CityForecast
@@ -23,7 +23,7 @@ class ForecastOperator(private val forecastElements: MutableList<ForecastElement
     private val allHeader = Header(ALL)
 
     fun addToFavorites(item: CityForecast?) {
-        if (item == null) throw IllegalArgumentException()
+        if (item == null) throw IllegalArgumentException("Item can't be null")
         if (!forecastElements.contains(item)) throw IllegalArgumentException("No such item: $item")
         if (item.isFavorite) throw IllegalArgumentException("$item is already in favorites")
         item.isFavorite = true
@@ -60,8 +60,10 @@ class ForecastOperator(private val forecastElements: MutableList<ForecastElement
         }
         forecastElements.apply {
             clear()
-            add(favoritesHeader)
-            addAll(favorites)
+            if (favorites.isNotEmpty()) {
+                add(favoritesHeader)
+                addAll(favorites)
+            }
             add(allHeader)
             addAll(all)
         }

@@ -9,4 +9,6 @@
     <string name="add_title">Add to favorites?</string>
     <string name="remove_action">Remove</string>
     <string name="add_action">Add</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="second_page_information">Information</string>
 </resources>
