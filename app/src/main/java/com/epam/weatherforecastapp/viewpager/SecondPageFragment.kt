@@ -9,6 +9,14 @@ import androidx.fragment.app.Fragment
 import com.epam.weatherforecastapp.R
 import com.epam.weatherforecastapp.model.CityForecast
 
+/**
+ * The second page of [ForecastPagerFragment].
+ *
+ * @see [ForecastPagerFragment]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class SecondPageFragment : Fragment() {
 
     override fun onCreateView(

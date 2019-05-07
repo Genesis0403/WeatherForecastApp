@@ -6,6 +6,13 @@ import com.epam.weatherforecastapp.model.ForecastElement
 import com.epam.weatherforecastapp.model.Header
 import java.lang.IllegalArgumentException
 
+/**
+ * Utility class which helps with sorting,
+ * adding and removing items from [ForecastAdapter]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ForecastOperator(private val forecastElements: MutableList<ForecastElement>) {
 
     private val favorites = forecastElements.asSequence()
@@ -39,7 +46,6 @@ class ForecastOperator(private val forecastElements: MutableList<ForecastElement
     }
 
     fun sort(type: SortType) {
-        Log.d(TAG, "WE ARE IN!!!")
         when (type) {
             SortType.ALPH_ASC -> {
                 all.sortBy { it.cityName }

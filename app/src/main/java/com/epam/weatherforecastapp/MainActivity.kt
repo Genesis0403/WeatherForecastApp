@@ -2,8 +2,15 @@ package com.epam.weatherforecastapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
 import com.epam.weatherforecastapp.model.CityForecast
 import com.epam.weatherforecastapp.recyclerview.ForecastFragment
+
+/**
+ * Main activity with [ForecastFragment] inside as [RecyclerView]
+ *
+ * @author Vlad Korotkevich
+ */
 
 class MainActivity : AppCompatActivity() {
 

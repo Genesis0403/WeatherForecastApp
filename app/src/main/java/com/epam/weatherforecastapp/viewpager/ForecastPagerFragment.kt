@@ -12,6 +12,18 @@ import androidx.viewpager.widget.ViewPager
 import com.epam.weatherforecastapp.R
 import com.epam.weatherforecastapp.model.CityForecast
 
+/**
+ * Fragment which represents [ViewPager]
+ * with [FirstPageFragment] and [SecondPageFragment].
+ *
+ * [ViewPagerAdapter] is used to scroll between pages
+ *
+ * @see [FirstPageFragment]
+ * @see [SecondPageFragment]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ForecastPagerFragment : Fragment() {
 
     override fun onCreateView(

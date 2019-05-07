@@ -9,6 +9,13 @@ import androidx.fragment.app.DialogFragment
 import com.epam.weatherforecastapp.R
 import com.epam.weatherforecastapp.model.CityForecast
 
+/**
+ * Dialog which called when user click or long click
+ * on [ForecastAdapter.ItemViewHolder].
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ForecastDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

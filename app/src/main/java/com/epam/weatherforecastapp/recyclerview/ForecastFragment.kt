@@ -14,11 +14,17 @@ import com.epam.weatherforecastapp.model.CityForecast
 import com.epam.weatherforecastapp.model.ForecastElement
 import com.epam.weatherforecastapp.model.Header
 
+/**
+ * A Fragment which represents [RecyclerView].
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ForecastFragment : Fragment() {
 
     private lateinit var adapterOperator: ForecastOperator
-    lateinit var adapter: ForecastAdapter
-    var lastSortType = SortType.ALPH_ASC
+    private lateinit var adapter: ForecastAdapter
+    private var lastSortType = SortType.ALPH_ASC
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,7 +111,6 @@ class ForecastFragment : Fragment() {
     private fun onAddRemoveRequest(data: Intent) {
         val isRemove = data.getBooleanExtra(ForecastDialog.OPERATION, false)
         val item: CityForecast? = data.getParcelableExtra(ForecastDialog.ITEM)
-        Log.d(TAG, "LOOOOL")
         if (isRemove) {
             adapterOperator.apply {
                 removeFromFavorites(item)

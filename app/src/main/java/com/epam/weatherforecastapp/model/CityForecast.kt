@@ -1,6 +1,13 @@
 package com.epam.weatherforecastapp.model
 
+import com.epam.weatherforecastapp.recyclerview.ForecastAdapter
 import kotlinx.android.parcel.Parcelize
+
+/**
+ * Data class which represents forecast for [ForecastAdapter.ItemViewHolder]
+ *
+ * @author Vlad Korotkevich
+ */
 
 @Parcelize
 data class CityForecast(

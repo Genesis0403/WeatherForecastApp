@@ -12,6 +12,14 @@ import com.epam.weatherforecastapp.R
 import com.epam.weatherforecastapp.model.CityForecast
 import com.epam.weatherforecastapp.model.Weather
 
+/**
+ * The first page of [ForecastPagerFragment].
+ *
+ * @see [ForecastPagerFragment]
+ *
+ * @author Vlad Korotkevich
+ */
+
 class FirstPageFragment : Fragment() {
 
     override fun onCreateView(

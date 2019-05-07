@@ -15,6 +15,18 @@ import com.epam.weatherforecastapp.model.ForecastElement
 import com.epam.weatherforecastapp.model.Header
 import com.epam.weatherforecastapp.viewpager.ForecastPagerFragment
 
+/**
+ * Adapter which is used in [ForecastFragment] to manipulate
+ * with [RecyclerView].
+ *
+ * [ItemViewHolder] is a holder with city forecast.
+ * [HeaderViewHolder] is a header.
+ *
+ * With [onClickListenerInit] [ForecastFragment] is being replaced with [ForecastPagerFragment].
+ *
+ * @author Vlad Korotkevich
+ */
+
 class ForecastAdapter(
     private val items: List<ForecastElement>,
     private val fragment: ForecastFragment
@@ -62,7 +74,6 @@ class ForecastAdapter(
                 .into(holder.cityImage)
 
             holder.itemView.setOnClickListener {
-                //Log.d(TAG, el.toString())
                 onClickListenerInit(el)
             }
 
