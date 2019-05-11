@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+            android:title="@string/alphabetically_ascending"
+            android:id="@+id/sort_alph_asc"/>
+    <item
+        android:title="@string/alphabetically_descending"
+        android:id="@+id/sort_alph_desc"
+    />
+    <item
+        android:title="@string/temperature_ascending"
+        android:id="@+id/sort_temp_asc"
+    />
+    <item
+        android:title="@string/temperature_descending"
+        android:id="@+id/sort_temp_desc"
+    />
+</menu>

@@ -1,6 +1,15 @@
 package com.epam.weatherforecastapp.model
 
-abstract class ForecastElement(
-    val isSection: Boolean = false,
-    val title: String? = null
-)
+import android.os.Parcelable
+
+/**
+ * Interface which let to define an item or header.
+ *
+ * @see [CityForecast]
+ * @see [Header]
+ *
+ * @author Vlad Korotkevich
+ */
+interface ForecastElement : Parcelable {
+    val isHeader: Boolean
+}
